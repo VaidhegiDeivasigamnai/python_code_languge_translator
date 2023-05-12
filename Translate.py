@@ -4,8 +4,8 @@ from tkinter.ttk import *
 import tkinter
 import tkinter.ttk
 import googletrans
-import textblob
 import tkinter.messagebox
+import textblob
 
 
 translate = Tk()
@@ -21,24 +21,26 @@ def click():
        
         #get languages from language key
         for key, value in languages.items():
-            if (value == actual_text.get()):
+            if (value == default_language.get()):
                 from_language_key = key
+                break
         
         for key, value in languages.items():
-            if (value == translated_text.get()):
+            if (value == translated_language.get()):
                 to_language_key = key
+                break
 
         #converrt to textblob
-        text = textblob.Textblob(actual_text.get(1.0, END))
+        text = textblob.TextBlob(actual_text.get(1.0, END))
 
         #translate command
-        text = text.translate(from_Lang=from_language_key , to=to_language_key)
+        text = text.translate(from_lang=from_language_key , to=to_language_key)
 
         #translate output
         translated_text.insert(1.0, text)
 
     except Exception as e:
-        tkinter.messagebox.messagebox.showerror("Language error", e)
+        tkinter.messagebox.showerror("Language error", e)
 
             #google translate
 languages = googletrans.LANGUAGES
@@ -52,7 +54,7 @@ actual_text.grid(row=0, column=0)
 actual_text.grid(padx=20, pady=20)
 actual_text.configure(bg="#FFEBCD")
 
-translate_button = Button(translate, text="Translate")
+translate_button = Button(translate, text="Translate",command=click)
 translate_button.grid(row=0, column=1, padx=10)
 
 translated_text = Text(translate, height=8, width=32)
@@ -70,7 +72,3 @@ translated_language.current(26)
 translated_language.grid(row=1, column=2)
 
 translate.mainloop()
-
-
-
-
